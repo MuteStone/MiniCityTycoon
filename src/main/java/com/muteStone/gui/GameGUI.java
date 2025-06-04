@@ -59,21 +59,15 @@ public class GameGUI extends JFrame {
 
         JButton buildFarmBtn = new JButton("Farm bauen (100$)");
         buildFarmBtn.addActionListener(e -> {
-            if (game.buildBuilding(new Farm())) {
-                appendLog("Farm gebaut.");
-            } else {
-                appendLog("Nicht genug Geld für Farm.");
-            }
+            String result = game.buildBuilding(new Farm());
+            appendLog(result);
             updateUI();
         });
 
-        JButton buildFactoryBtn = new JButton("Fabrik bauen(500$)");
+        JButton buildFactoryBtn = new JButton("Fabrik bauen (500$)");
         buildFactoryBtn.addActionListener(e -> {
-            if (game.buildBuilding(new Factory())) {
-                appendLog("Fabrik gebaut.");
-            } else {
-                appendLog("Nicht genug Geld für Fabrik.");
-            }
+            String result = game.buildBuilding(new Factory());
+            appendLog(result);
             updateUI();
         });
 
@@ -109,8 +103,8 @@ public class GameGUI extends JFrame {
 
         //Gebäude anzeigen
         StringBuilder buildings = new StringBuilder();
-        game.getBuildings().forEach(b ->
-                buildings.append(b.getClass().getSimpleName()).append("\n"));
+        game.getBuildings().forEach(name ->
+                buildings.append(name).append("\n"));
         buildingArea.setText(buildings.toString());
     }
 }

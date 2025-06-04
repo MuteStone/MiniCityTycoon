@@ -1,8 +1,8 @@
 package main.java.com.muteStone.economy;
 
 public class Resource {
-    private ResourceType type;
-    private int amount;
+    private final ResourceType type;
+    private final int amount;
 
     public Resource(ResourceType type, int amount) {
         this.type = type;
@@ -15,5 +15,10 @@ public class Resource {
 
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public String toString() {
+        return amount + " " + type;
     }
 }
