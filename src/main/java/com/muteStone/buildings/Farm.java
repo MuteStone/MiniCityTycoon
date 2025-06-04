@@ -9,7 +9,7 @@ import java.util.List;
 public class Farm extends Building {
 
     public Farm() {
-        this.cost = 300;
+        this.cost = 100;
     }
 
     @Override
