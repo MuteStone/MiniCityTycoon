@@ -1,5 +1,12 @@
 package com.muteStone.save;
 
+import com.muteStone.buildings.Building;
+import com.muteStone.economy.ResourceType;
+import net.bytebuddy.agent.builder.AgentBuilder;
+
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -7,14 +14,16 @@ import java.util.Map;
  */
 public class GameState {
     private int money;
-    private Map<String, Integer> buildings;
-    private Map<String, Integer> resources;
+    private List<String> buildings;
+    private Map<ResourceType, Integer> resources;
 
     public GameState() {
-        //Leerer Konstruktor für Jackson
+        this.buildings = new ArrayList<>();
+        this.resources = new EnumMap<>(ResourceType.class);
+        this.money = 0;
     }
 
-    public GameState (int money, Map<String, Integer> buildings, Map<String, Integer> resources) {
+    public GameState (int money, List<String> buildings, Map<ResourceType, Integer> resources) {
         this.money = money;
         this.buildings = buildings;
         this.resources = resources;
@@ -28,19 +37,19 @@ public class GameState {
         this.money = money;
     }
 
-    public Map<String, Integer> getBuildings() {
+    public List<String> getBuildings() {
         return buildings;
     }
 
-    public void setBuildings(Map<String, Integer> buildings) {
+    public void setBuildings(List<String> buildings) {
         this.buildings = buildings;
     }
 
-    public Map<String, Integer> getResources() {
+    public Map<ResourceType, Integer> getResources() {
         return resources;
     }
 
-    public void setResources(Map<String, Integer> resources) {
+    public void setResources(Map<ResourceType, Integer> resources) {
         this.resources = resources;
     }
 }

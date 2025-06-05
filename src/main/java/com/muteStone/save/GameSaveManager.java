@@ -16,16 +16,12 @@ public class GameSaveManager {
 
     //Game -> GameState
     public static GameState toGameState(Game game) {
-        Map<String, Integer> buildingCounts = new HashMap<>();
-        for (String name : game.getBuildings()) {
-            buildingCounts.merge(name, 1, Integer::sum);
-        }
+        List<String> buildingNames = game.getRawBuildings().stream()
+                .map(Building::getName)
+                .toList();
 
-        Map<String, Integer> resources = new HashMap<>();
-        game.getResourceStorage().getAll().forEach((type, amount) ->
-                resources.put(type.name(), amount));
+        return new GameState(game.getMoney(), buildingNames, game.getResourceStorage().getAll());
 
-        return new GameState(game.getMoney(), buildingCounts, resources);
     }
 
     //GameState -> Game
@@ -36,16 +32,11 @@ public class GameSaveManager {
         ));
 
         //Ressourcen laden
-        state.getResources().forEach((typeStr, amount) -> {
-            ResourceType type = ResourceType.valueOf(typeStr);
-            game.getResourceStorage().modify(type, amount);
-        });
+        state.getResources().forEach(game.getResourceStorage()::modify);
 
         //Gebäude rekonsturieren
-        state.getBuildings().forEach((name, count) -> {
-            for (int i = 0; i < count; i++) {
-                game.buildBuilding(createBuildingFromName(name));
-            }
+        state.getBuildings().forEach(name -> {
+            game.buildBuildingDirect(createBuildingFromName(name));
         });
 
         return game;

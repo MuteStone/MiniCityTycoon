@@ -144,4 +144,20 @@ public class Game {
 
         return grouped;
     }
+
+    /**
+     * Fügt ein Gebäude direkt hinzu (z.B. beim Laden eines Spielstands).
+     * Es wird kein Geld abgezogen.
+     */
+    public void buildBuildingDirect(Building b) {
+        buildings.add(b);
+    }
+
+
+    /**
+     * Gibt die rohe Liste aller gebäude zurück (für Speichern)
+     */
+    public List<Building> getRawBuildings() {
+        return buildings;
+    }
 }
