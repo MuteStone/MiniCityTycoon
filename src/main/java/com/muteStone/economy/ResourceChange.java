@@ -38,4 +38,9 @@ public class ResourceChange {
         storage.modify(type, current + amount);
         return true;
     }
+
+    public boolean canApply(ResourceStorage storage) {
+        int current = storage.get(type);
+        return !(amount < 0 && current + amount < 0);
+    }
 }

@@ -1,14 +1,16 @@
 package main.java.com.muteStone.gui;
 
+import main.java.com.muteStone.buildings.Bakery;
 import main.java.com.muteStone.buildings.Factory;
 import main.java.com.muteStone.buildings.Farm;
-import main.java.com.muteStone.economy.Resource;
 import main.java.com.muteStone.economy.ResourceStorage;
+import main.java.com.muteStone.economy.ResourceType;
 import main.java.com.muteStone.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.Map;
 
 public class GameGUI extends JFrame {
     private final Game game;
@@ -71,6 +73,13 @@ public class GameGUI extends JFrame {
             updateUI();
         });
 
+        JButton buildBakeryBtn = new JButton("Bäckerei bauen (250$)");
+        buildBakeryBtn.addActionListener(e -> {
+            String result = game.buildBuilding(new Bakery());
+            appendLog(result);
+            updateUI();
+        });
+
         JButton simulateBtn = new JButton("Nächster Tag");
         simulateBtn.addActionListener(e -> {
             List<String> events = game.simulateDayAndGetLog();
@@ -80,6 +89,7 @@ public class GameGUI extends JFrame {
 
         controlPanel.add(buildFarmBtn);
         controlPanel.add(buildFactoryBtn);
+        controlPanel.add(buildBakeryBtn);
         controlPanel.add(simulateBtn);
 
         add(controlPanel, BorderLayout.SOUTH);
@@ -102,9 +112,17 @@ public class GameGUI extends JFrame {
         resourceArea.setText(resourceText.toString());
 
         //Gebäude anzeigen
-        StringBuilder buildings = new StringBuilder();
-        game.getBuildings().forEach(name ->
-                buildings.append(name).append("\n"));
-        buildingArea.setText(buildings.toString());
+        Map<ResourceType, Map<String, Integer>> grouped = game.getBuildingsGroupedByOutput();
+
+        StringBuilder groupedText = new StringBuilder();
+        for (Map.Entry<ResourceType, Map<String, Integer>> entry : grouped.entrySet()) {
+            groupedText.append(entry.getKey()).append("-Produktion:\n");
+            for (Map.Entry<String, Integer> inner : entry.getValue().entrySet()) {
+                groupedText.append("  - ").append(inner.getKey())
+                        .append(" (").append(inner.getValue()).append("x)\n");
+            }
+            groupedText.append("\n");
+        }
+        buildingArea.setText(groupedText.toString());
     }
 }
