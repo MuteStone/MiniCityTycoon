@@ -1,19 +1,23 @@
-package main.java.com.muteStone.gui;
+package com.muteStone.gui;
 
-import main.java.com.muteStone.buildings.Bakery;
-import main.java.com.muteStone.buildings.Factory;
-import main.java.com.muteStone.buildings.Farm;
-import main.java.com.muteStone.economy.ResourceStorage;
-import main.java.com.muteStone.economy.ResourceType;
-import main.java.com.muteStone.game.Game;
+import com.muteStone.buildings.Bakery;
+import com.muteStone.buildings.Factory;
+import com.muteStone.buildings.Farm;
+import com.muteStone.buildings.Weaponsmith;
+import com.muteStone.economy.ResourceStorage;
+import com.muteStone.economy.ResourceType;
+import com.muteStone.game.Game;
+import com.muteStone.save.GameSaveManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public class GameGUI extends JFrame {
-    private final Game game;
+    private Game game;
     private final JTextArea logArea;
     private final JLabel moneyLabel;
     private final JTextArea resourceArea;
@@ -25,7 +29,7 @@ public class GameGUI extends JFrame {
         this.game = new Game(); //Spiel-Backend
 
         //Layout
-        setSize(800, 600);
+        setSize(1280, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -80,6 +84,13 @@ public class GameGUI extends JFrame {
             updateUI();
         });
 
+        JButton buildWeaponsmithbtn = new JButton("Waffenschmied bauen (700$)");
+        buildWeaponsmithbtn.addActionListener(e -> {
+            String result = game.buildBuilding(new Weaponsmith());
+            appendLog(result);
+            updateUI();
+        });
+
         JButton simulateBtn = new JButton("Nächster Tag");
         simulateBtn.addActionListener(e -> {
             List<String> events = game.simulateDayAndGetLog();
@@ -87,10 +98,44 @@ public class GameGUI extends JFrame {
             updateUI();
         });
 
+        JButton saveButton = new JButton("Spiel speichern");
+        saveButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showSaveDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File file = fileChooser.getSelectedFile();
+                    GameSaveManager.save(game, file);
+                    appendLog("Spiel gespeichert: " + file.getName());
+                } catch (IOException ex) {
+                    appendLog("Fehler beim Speichern: " + ex.getMessage());
+                }
+            }
+        });
+
+        JButton loadButton = new JButton("Spiel laden");
+        loadButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            int result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                try {
+                    File file = fileChooser.getSelectedFile();
+                    Game loadedGame = GameSaveManager.load(file);
+                    this.replaceGame(loadedGame);
+                    appendLog("Spiel geladen: " + file.getName());
+                } catch (Exception ex) {
+                    appendLog("Fehler beim laden: " + ex.getMessage());
+                }
+            }
+        });
+
         controlPanel.add(buildFarmBtn);
         controlPanel.add(buildFactoryBtn);
         controlPanel.add(buildBakeryBtn);
+        controlPanel.add(buildWeaponsmithbtn);
         controlPanel.add(simulateBtn);
+        controlPanel.add(saveButton);
+        controlPanel.add(loadButton);
 
         add(controlPanel, BorderLayout.SOUTH);
 
@@ -124,5 +169,10 @@ public class GameGUI extends JFrame {
             groupedText.append("\n");
         }
         buildingArea.setText(groupedText.toString());
+    }
+
+    private void replaceGame(Game newGame) {
+        this.game = newGame;
+        updateUI();
     }
 }

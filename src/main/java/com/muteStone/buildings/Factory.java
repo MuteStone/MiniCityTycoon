@@ -1,7 +1,7 @@
-package main.java.com.muteStone.buildings;
+package com.muteStone.buildings;
 
-import main.java.com.muteStone.economy.ResourceChange;
-import main.java.com.muteStone.economy.ResourceType;
+import com.muteStone.economy.ResourceChange;
+import com.muteStone.economy.ResourceType;
 
 import java.util.Collections;
 import java.util.List;

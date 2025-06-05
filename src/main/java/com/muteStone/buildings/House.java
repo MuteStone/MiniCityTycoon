@@ -1,4 +1,4 @@
-package main.java.com.muteStone.buildings;
+package com.muteStone.buildings;
 
 public class House {
 }

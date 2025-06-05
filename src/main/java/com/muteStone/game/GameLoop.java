@@ -1,4 +1,4 @@
-package main.java.com.muteStone.game;
+package com.muteStone.game;
 
 public class GameLoop {
 }

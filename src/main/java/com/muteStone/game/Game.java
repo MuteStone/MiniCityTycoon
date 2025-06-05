@@ -1,9 +1,9 @@
-package main.java.com.muteStone.game;
+package com.muteStone.game;
 
-import main.java.com.muteStone.buildings.Building;
-import main.java.com.muteStone.economy.ResourceChange;
-import main.java.com.muteStone.economy.ResourceStorage;
-import main.java.com.muteStone.economy.ResourceType;
+import com.muteStone.buildings.Building;
+import com.muteStone.economy.ResourceChange;
+import com.muteStone.economy.ResourceStorage;
+import com.muteStone.economy.ResourceType;
 
 import java.util.*;
 import java.util.stream.Collectors;

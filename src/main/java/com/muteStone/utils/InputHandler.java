@@ -1,4 +1,4 @@
-package main.java.com.muteStone.utils;
+package com.muteStone.utils;
 
 public class InputHandler {
 }

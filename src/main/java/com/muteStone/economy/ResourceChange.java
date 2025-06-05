@@ -1,4 +1,4 @@
-package main.java.com.muteStone.economy;
+package com.muteStone.economy;
 
 /**
  * Beschreibt eine Änderung an einer Ressource (positiv oder negativ).

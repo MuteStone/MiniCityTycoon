@@ -1,4 +1,4 @@
-package main.java.com.muteStone.economy;
+package com.muteStone.economy;
 
 
 import java.util.EnumMap;

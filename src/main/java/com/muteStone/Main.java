@@ -1,6 +1,6 @@
-package main.java.com.muteStone;
+package com.muteStone;
 
-import main.java.com.muteStone.gui.GameGUI;
+import com.muteStone.gui.GameGUI;
 
 
 /**
