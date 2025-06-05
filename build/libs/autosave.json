@@ -1,0 +1,9 @@
+{
+  "money" : 1000,
+  "buildings" : [ ],
+  "resources" : {
+    "FOOD" : 0,
+    "MATERIALS" : 0,
+    "MONEY" : 0
+  }
+}

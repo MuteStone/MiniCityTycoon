@@ -11,6 +11,8 @@ import com.muteStone.save.GameSaveManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -32,6 +34,32 @@ public class GameGUI extends JFrame {
         setSize(1280, 720);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int choice = JOptionPane.showConfirmDialog(
+                        GameGUI.this,
+                        "Willst du das Spiel wirklich beenden?",
+                        "Beenden bestätigen",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (choice == JOptionPane.YES_OPTION) {
+                    try {
+                        File file = new File("autosave.json");
+                        GameSaveManager.save(game, file);
+                        System.out.println("Spiel automatisch gespeichert.");
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(GameGUI.this,
+                                "Fehler beim automatischen Speichen:\n" + ex.getMessage(),
+                                "Fehler", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    System.exit(0);
+                }
+            }
+        });
 
         //Info Panel (oben)
         JPanel infoPanel = new JPanel(new GridLayout(1, 2));
@@ -129,6 +157,27 @@ public class GameGUI extends JFrame {
             }
         });
 
+        JButton newGameBtn = new JButton("Neues Spiel");
+        newGameBtn.addActionListener(e -> {
+            int choice = JOptionPane.showConfirmDialog(this, "Willst du wirklich ein neues Spiel starten?\nDer aktuelle Fortschritt geht verloren.", "Neues Spiel bestätigen", JOptionPane.YES_NO_OPTION);
+
+            if (choice == JOptionPane.YES_OPTION) {
+                game.reset();
+                appendLog("Neues Spiel gestartet.");
+                updateUI();
+            }
+        });
+
+        JButton quitBtn = new JButton("Spiel beenden");
+        quitBtn.addActionListener(e -> {
+            int choice = JOptionPane.showConfirmDialog(this,
+                    "Willst du das Spiel wirklich beenden?",
+                    "Spiel beenden", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        });
+
         controlPanel.add(buildFarmBtn);
         controlPanel.add(buildFactoryBtn);
         controlPanel.add(buildBakeryBtn);
@@ -136,6 +185,8 @@ public class GameGUI extends JFrame {
         controlPanel.add(simulateBtn);
         controlPanel.add(saveButton);
         controlPanel.add(loadButton);
+        controlPanel.add(newGameBtn);
+        controlPanel.add(quitBtn);
 
         add(controlPanel, BorderLayout.SOUTH);
 

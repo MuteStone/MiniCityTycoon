@@ -20,26 +20,6 @@ public class ResourceStorage {
         }
     }
 
-    /**
-     * Versucht, eine Ressourcenänderung anzuwenden.
-     * Kann sowohl positive als auch negative Werte verarbeiten,
-     * wobei die Mende nie unter 0 fallen darf.
-     * @param resource Die Ressource mit Menge (positiv oder negativ)
-     */
-    /*public boolean add(Resource resource) {
-        ResourceType type = resource.getType();
-        int current = storage.getOrDefault(type, 0);
-        int newAmount = current + resource.getAmount();
-
-        if (newAmount < 0) {
-            //Nicht genug Ressourcen, Änderung ablehnen
-            return false;
-        }
-
-        storage.put(type, newAmount);
-        return true;
-    }*/
-
     //Gibt alle Ressourcen zurück (unveränderlich)
     public Map<ResourceType, Integer> getAll() {
         return Map.copyOf(storage);

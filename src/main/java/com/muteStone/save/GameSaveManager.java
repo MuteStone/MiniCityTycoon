@@ -16,11 +16,15 @@ public class GameSaveManager {
 
     //Game -> GameState
     public static GameState toGameState(Game game) {
-        List<String> buildingNames = game.getRawBuildings().stream()
-                .map(Building::getName)
-                .toList();
+        List<String> buildingNames = new ArrayList<>();
+        for (Building b : game.getRawBuildings()) {
+            buildingNames.add(b.getClass().getSimpleName());
+        }
 
-        return new GameState(game.getMoney(), buildingNames, game.getResourceStorage().getAll());
+        Map<ResourceType, Integer> resources = new EnumMap<>(ResourceType.class);
+        game.getResourceStorage().getAll().forEach(resources::put);
+
+        return new GameState(game.getMoney(), buildingNames, resources);
 
     }
 
@@ -48,7 +52,7 @@ public class GameSaveManager {
             case "Farm" -> new Farm();
             case "Factory" -> new Factory();
             case "Bakery" -> new Bakery();
-            case "WeaponSmith" -> new Weaponsmith();
+            case "Weaponsmith" -> new Weaponsmith();
             default -> throw new IllegalArgumentException("Unbekannter Gebäudetyp: " + name);
         };
     }

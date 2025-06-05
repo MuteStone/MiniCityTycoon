@@ -160,4 +160,10 @@ public class Game {
     public List<Building> getRawBuildings() {
         return buildings;
     }
+
+    public void reset() {
+        this.money = 1000;
+        this.buildings.clear();
+        this.resourceStorage = new ResourceStorage();
+    }
 }
