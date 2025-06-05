@@ -1,6 +1,6 @@
 package main.java.com.muteStone.buildings;
 
-import main.java.com.muteStone.economy.Resource;
+import main.java.com.muteStone.economy.ResourceChange;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public abstract class Building {
         return cost;
     }
 
-    public abstract List<Resource> produce();
+    public abstract List<ResourceChange> produce();
 
     public String getName() {
         return this.getClass().getSimpleName();

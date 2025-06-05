@@ -3,7 +3,7 @@ package main.java.com.muteStone.game;
 import main.java.com.muteStone.buildings.Building;
 import main.java.com.muteStone.buildings.Factory;
 import main.java.com.muteStone.buildings.Farm;
-import main.java.com.muteStone.economy.Resource;
+import main.java.com.muteStone.economy.ResourceChange;
 import main.java.com.muteStone.economy.ResourceStorage;
 
 import java.util.ArrayList;
@@ -38,11 +38,17 @@ public class Game {
         List<String> events = new ArrayList<>();
 
         for (Building b : buildings) {
-            List<Resource> produced = b.produce();
-            for (Resource r : produced) {
-                resourceStorage.add(r);
-                events.add(b.getClass().getSimpleName() + " produziert: " +
-                        r.getAmount() + " " + r.getType());
+            List<ResourceChange> changes = b.produce();
+            for (ResourceChange change : changes) {
+                boolean success = change.apply(resourceStorage);
+                if (success) {
+                    events.add(b.getName() + " produziert: " +
+                            change.getAmount() + " " + change.getType());
+                } else {
+                    events.add(b.getName() + " konnte nicht produzieren: " +
+                            change.getAmount() + " " + change.getType() +
+                            " (Nicht genug Ressourcen)");
+                }
             }
         }
 

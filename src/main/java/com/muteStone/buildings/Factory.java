@@ -1,6 +1,6 @@
 package main.java.com.muteStone.buildings;
 
-import main.java.com.muteStone.economy.Resource;
+import main.java.com.muteStone.economy.ResourceChange;
 import main.java.com.muteStone.economy.ResourceType;
 
 import java.util.Collections;
@@ -23,8 +23,8 @@ public class Factory extends Building {
      * @return Liste mit produzierten Ressourcen (hier Materialien).
      */
     @Override
-    public List<Resource> produce() {
+    public List<ResourceChange> produce() {
         //Produziert 15 Materialien pro Tag
-        return Collections.singletonList(new Resource(ResourceType.MATERIALS, PRODUCTION_AMOUNT));
+        return Collections.singletonList(new ResourceChange(ResourceType.MATERIALS, PRODUCTION_AMOUNT));
     }
 }

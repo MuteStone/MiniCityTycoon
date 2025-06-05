@@ -26,7 +26,7 @@ public class ResourceStorage {
      * wobei die Mende nie unter 0 fallen darf.
      * @param resource Die Ressource mit Menge (positiv oder negativ)
      */
-    public boolean add(Resource resource) {
+    /*public boolean add(Resource resource) {
         ResourceType type = resource.getType();
         int current = storage.getOrDefault(type, 0);
         int newAmount = current + resource.getAmount();
@@ -38,7 +38,7 @@ public class ResourceStorage {
 
         storage.put(type, newAmount);
         return true;
-    }
+    }*/
 
     //Gibt alle Ressourcen zurück (unveränderlich)
     public Map<ResourceType, Integer> getAll() {
@@ -48,6 +48,11 @@ public class ResourceStorage {
     //Einzelnen Ressourcenwert abrufen
     public int get(ResourceType type) {
         return storage.getOrDefault(type, 0);
+    }
+
+    //Setzt den neuen Wert für einen bestimmten Ressourcentyp
+    public void modify(ResourceType type, int newAmount) {
+        storage.put(type, Math.max(0, newAmount)); //Fallback-Sicherung
     }
 
 }

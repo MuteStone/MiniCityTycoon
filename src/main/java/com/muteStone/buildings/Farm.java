@@ -1,6 +1,6 @@
 package main.java.com.muteStone.buildings;
 
-import main.java.com.muteStone.economy.Resource;
+import main.java.com.muteStone.economy.ResourceChange;
 import main.java.com.muteStone.economy.ResourceType;
 
 import java.util.Collections;
@@ -23,9 +23,9 @@ public class Farm extends Building {
      * @return Liste mit produzierten Ressourcen (hier nur Nahrung).
      */
     @Override
-    public List<Resource> produce() {
+    public List<ResourceChange> produce() {
         //Eine Farm produziert 10 nahrung pro Tag
-        return Collections.singletonList(new Resource(ResourceType.FOOD, PRODUCTION_AMOUNT));
+        return Collections.singletonList(new ResourceChange(ResourceType.FOOD, PRODUCTION_AMOUNT));
     }
 
 }
